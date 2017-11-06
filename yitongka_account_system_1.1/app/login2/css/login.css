@@ -1,0 +1,29 @@
+/* app css stylesheet */
+
+.ng-cloak{
+    display:none;
+}
+
+body { 
+   background-color: #EEE8CD;
+   padding-top:10%; 
+}
+
+.container{
+	background-color: #FFFFFF;
+	padding: 2%;
+	width:35%;
+	height:100%;
+	border-radius: 15px;
+}
+
+h2{
+	text-align:center;
+	font-family:"Î¢ÈíÑÅºÚ";
+	font-weight:bold;
+  display: inline;
+}
+
+.btn{
+	margin-top:30px; 
+}

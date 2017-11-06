@@ -1,0 +1,166 @@
+<body>
+    <div class="container">
+    <button type="button" ng-click="addItem()" class="btn btn-sm btn-success">
+        <i class="glyphicon glyphicon-plus">
+        </i> 新建机构
+    </button>
+
+    <form>
+        <label for="predicate">选择条件查询范围:</label>
+        <select class="form-control" id="predicate" ng-model="selectedPredicate" ng-options="predicate for predicate in predicates"></select>
+    </form>
+
+    <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+    <thead>
+    <tr>
+        <th></th>
+        <th st-sort="organizationCode">编号</th>
+        <th st-sort="organizationName">机构</th>
+        <th st-sort="organizationParentName">直属机构</th>
+        <th st-sort="organizationLegalPersonality">法人</th>
+        <th st-sort="organizationAddress">地址</th>
+        <th st-sort="organizationlicense">执照</th>
+    </tr>
+
+    <th colspan="2">
+        <input st-search="organizationCode" placeholder="search for code" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="organizationName" placeholder="search for name" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="organizationParentName" placeholder="search for parentOrg" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="organizationLegalPersonality" placeholder="search for legalPersonality" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="organizationAddress" placeholder="search for address" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="organizationlicense" placeholder="search for license" class="input-sm form-control" type="search"/>
+    </th>
+
+    <th>
+        <input st-search="{{selectedPredicate}}" placeholder="条件查询" class="input-sm form-control" type="search"/>
+    </th>
+
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="row in displayedCollection">
+        <td cs-select="row"></td>
+        <td>{{row.organizationCode}}</td>
+        <td>{{row.organizationName}}</td>
+        <td>{{row.organizationParentName}}</td>
+        <td>{{row.organizationLegalPersonality}}</td>
+        <td>{{row.organizationAddress}}</td>
+        <td>{{row.organizationlicense}}</td>
+
+
+        <td>
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-click="update(row)">
+            <i class="glyphicon glyphicon-pencil"></i>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="removeItem(row)">
+            <i class="glyphicon glyphicon-trash"></i>
+            </button>
+        </div>
+        </td>
+
+    </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+            </td>
+        </tr>
+    </tfoot>
+    </table>
+
+       <!-- 添加信息 -->
+      <div class="modal" id="modal-1">
+        <div class="modal-dialog">
+         <div class="modal-content">
+     
+          <div class="modal-header">
+           <button class="close" data-dismiss="modal">
+            <span class="glyphicon glyphicon-remove"></span>
+           </button>
+           <h3 class="modal-title">添加信息</h3>
+          </div>
+     
+          <div class="modal-body">
+           <div>编号：</div>
+           <input ng-model="newCode" type="text">
+           <div>机构：</div>
+           <input ng-model="newName" type="text">
+           <div>直属机构Id：</div>
+           <input ng-model="newParentId" type="text">
+            <div>直属机构：</div>
+           <input ng-model="newParentName" type="text">
+            <div>法人：</div>
+           <input ng-model="newLegalPersonality" type="text">
+           <div>地址：</div>
+           <input ng-model="newAddress" type="text">
+           <div>执照：</div>
+           <input ng-model="newLicense" type="text">
+          </div>
+     
+          <div class="modal-footer">
+           <button class="btn btn-default" data-dismiss="modal">
+           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+           <button class="btn btn-primary" ng-click="save()">
+           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+          </div>
+     
+         </div>
+        </div>
+      </div>
+       
+      <!-- 修改信息 -->
+      <div class="modal" id="modal-2">
+        <div class="modal-dialog">
+         <div class="modal-content">
+     
+          <div class="modal-header">
+           <button class="close" data-dismiss="modal">
+            <span class="glyphicon glyphicon-remove"></span>
+           </button>
+           <h3 class="modal-title">修改信息</h3>
+          </div>
+    
+          <div class="modal-body">
+           <div>编号：</div>
+           <input ng-model="prod.code" value="{{prod.code}}" type="text">
+           <div>机构：</div>
+           <input ng-model="prod.name" value="{{prod.name}}" type="text">
+            <div>直属机构id：</div>
+           <input ng-model="prod.parentId" value="{{prod.parentId}}" type="text">
+           <div>直属机构：</div>
+           <input ng-model="prod.parentName" value="{{prod.parentName}}" type="text">
+            <div>法人：</div>
+           <input ng-model="prod.legalPersonality" value="{{prod.legalPersonality}}" type="text">
+           <div>地址：</div>
+           <input ng-model="prod.address" value="{{prod.address}}" type="text">
+           <div>执照：</div>
+           <input ng-model="prod.license" value="{{prod.license}}" type="text">
+          </div>
+     
+          <div class="modal-footer">
+           <button class="btn btn-default" data-dismiss="modal">
+           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+           <button class="btn btn-primary" ng-click="ensure()">
+           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>确定</button>
+          </div>
+         </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+

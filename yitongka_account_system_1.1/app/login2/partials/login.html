@@ -1,0 +1,60 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- CSS ===================== -->
+    <!-- load bootstrap -->
+    <meta charset="utf-8">
+   	<link rel="stylesheet" href="login2/css/login.css">
+    
+   
+</head>
+
+<!-- apply angular app and controller to our body -->
+<body>
+<div class="container ng-cloak">
+<div class="col-sm-8 col-sm-offset-2">
+    
+    <!-- PAGE HEADER -->
+    <div class="page-header"><h2>易通卡账户系统</h2></div>
+   
+    <!-- FORM -->
+    <!-- pass in the variable if our form is valid or invalid Form.$valid-->
+    <form name="userForm" ng-submit="login(user)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+ 				 <!-- USERNAME -->
+		    <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+		        <div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-user fa-fw "></i>
+						</div>
+						<input type="text" name="username" placeholder="请输入你的用户名3~8位" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+				</div>
+		        
+		        <p ng-show="userForm.username.$error.minlength" class="help-block">用户名太短</p>
+		        <p ng-show="userForm.username.$error.maxlength" class="help-block">用户名太长</p>
+		    </div>
+		    
+		    <!-- PassWord -->
+		    <div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }"> 
+		        <div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-key fa-fw"></i>
+						</div>
+						<input type="password" name="password" placeholder="请输入你的密码5~12位" class="form-control" ng-model="user.password" required ng-minlength="5" ng-maxlength="12">
+				</div>
+		        <p ng-show="userForm.password.$error.minlength" class="help-block">密码太短</p>
+		        <p ng-show="userForm.password.$error.maxlength" class="help-block">密码太长</p>
+		    </div>
+
+        <!-- SUBMIT BUTTON -->
+        <button type="submit" class="btn btn-primary btn-block" ng-disabled="userForm.$invalid">
+        <i class="fa fa-refresh"></i> 登录</button>
+        
+    </form>
+
+</div><!-- col-sm-8 -->
+</div><!-- /container -->
+
+</body>
+</html>

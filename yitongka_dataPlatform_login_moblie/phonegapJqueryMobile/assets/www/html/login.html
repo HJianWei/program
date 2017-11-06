@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+    <link rel="stylesheet" href="../themes/default/css/jquery.mobile-1.4.5.min.css">
+    <script src="../js/jquery-1.8.3.min.js"></script>
+	<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script>
+	function login() {
+        $.ajax({
+           type: "POST",
+           url: baseUrl+"/sys/login.do?method=login",
+           data: $("form#form1").serialize(),
+           success: function(data){
+           	var operInfo = eval('(' + data + ')');//json的String格式转成object格式
+			if (operInfo.isOk) {
+				window.open("index1.html");
+			} else {
+				alert("登录失败，账号或密码错误");
+				$("#password").value("");
+			}
+                        
+           }
+        });
+		
+	}
+	</script>
+    <title>登录</title>
+</head>
+<body>
+<!--登陆页面-->
+<div data-role="page" id="pageLogin">
+
+    <div data-role="header">
+        <h1 role="heading">欢迎登陆</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+        <form id="form1" >
+
+            <div class="ui-field-contain">
+                <label for="name">账号:</label>
+
+                <input type="text" name="user" id="name" value="admin" style="width:90%">
+				
+
+                <label for="password">密码:</label>
+
+                <input type="password" name="password" id="password" value="manager" style="width:90%">
+                <div style="margin-top: 20%;">
+                    <a href="javascript:login();" data-role="button">登录</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div data-role="footer" style="text-align: center"  data-position="fixed">
+        <p>厦门易通卡</p>
+    </div>
+
+</div>
+
+
+</body>
+</html>

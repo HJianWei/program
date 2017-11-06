@@ -1,0 +1,43 @@
+﻿'use strict';
+
+/* Controllers */
+
+/*validationApp.controller('LoginController', function($scope) {
+	
+    // function to submit the form after all validation has occurred            
+    $scope.login = function(user) {
+
+        // check to make sure the form is completely valid
+        if (user.username=="admin"&&user.password=="admin0") {
+            //alert('our form is amazing');
+            window.location = "index.html";
+        }else{
+        		alert("用户名或密码错误");
+        }
+
+    };
+
+})*/
+
+validationApp.controller('UserCtrl', function ($scope, $http, $window) {
+      $scope.user = {username: 'john.doe', password: 'foobar'};
+      $scope.message = '';
+      $scope.submit = function () {
+        $http
+          .post('/authenticate', $scope.user)
+          .success(function (data, status, headers, config) {
+            $window.sessionStorage.token = data.token;
+            $scope.message = 'Welcome';
+          })
+          .error(function (data, status, headers, config) {
+            // Erase the token if the user fails to log in
+            delete $window.sessionStorage.token;
+
+            // Handle login errors here
+            $scope.message = 'Error: Invalid user or password';
+          });
+      };
+    });
+
+
+

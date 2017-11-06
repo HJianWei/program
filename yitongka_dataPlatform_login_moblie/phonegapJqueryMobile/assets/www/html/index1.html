@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache"/> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"/> 
+<link rel="stylesheet" href="../themes/default/css/jquery.mobile-1.4.5.min.css"></link>
+<script src="../js/jquery-1.8.3.min.js"></script>
+<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+<script src="../js/cordova.js"></script>
+<script src="../js/echarts-all.js"></script>
+<script src="../js/jquery.touchSwipe.min.js"></script>
+<script src="../js/app.js"></script>
+<script>
+var re = ajaxFind(baseUrl+"/sdmp/indexConfig.do?method=init");
+
+</script>
+
+<style>
+body {  
+    -webkit-text-size-adjust: none;  
+    
+}  
+.pages h3 {  
+    font-size: 20px;  
+    margin: 0;  
+}  
+#menu {  
+    background-color: #5a5959;  
+    float: left;  
+    height: 100%;  
+    width: 165px;  
+}  
+#menu h3 {  
+    font-family: arial;  
+    font-size: 12px;  
+    color: #fff;  
+    margin: 0;  
+    padding: 4px 0 4px 10px;  
+    background: -webkit-gradient(linear,left top,left bottombottom,color-stop(5%,rgba(90,89,89,1)),color-stop(85%,rgba(66,65,65,1)));  
+    border-top: solid #6b6b6b 1px;  
+    border-bottom: solid #3d3d3d 1px;  
+    text-shadow: 0 -1px 1px #333;  
+}  
+#menu ul {  
+    margin: 0;  
+    padding: 0;  
+    width: inherit;  
+}  
+#menu ul li a:link,  
+#menu ul li a:visited {  
+    border-bottom: solid #333 1px;  
+    box-shadow: 0 1px 0 #727272;  
+    color: #fff;  
+    display: block;  
+    font-family: arial;  
+    font-size: 14px;  
+    padding: 10px 0 10px 0px;  
+    text-decoration: none;  
+    text-shadow: 0 1px 1px #000;  
+    width: 165px;  
+}  
+
+.ui-body-c {  
+    background-color: #fff;  
+    line-height: 18px;  
+}  
+.active {  
+    background: -webkit-gradient(linear,left top,left bottombottom,color-stop(0%,rgba(30,29,29,1)),color-stop(21%,rgba(56,55,55,1)));  
+    color: #fff;  
+    text-shadow: 0 1px 1px #000;  
+    background-color: #716f6f;
+} 
+.red {  
+    background-color: #ff0000; //红色背景色
+}  
+ 
+</style>
+
+</head>
+<body>
+<div id="menu" style="display:none;">  
+    <h3>厦门易通卡数据管理平台</h3>  
+    <ul>  
+        <li class="active"><a href="#home1" class="contentLink">驾驶舱 </a></li>  
+        <li><a href="#home2" class="contentLink">分布图 </a></li>  
+        <li><a href="#home3" class="contentLink">交易量 </a></li>  
+        <li><a href="#home4" class="contentLink">交易卡量趋势分析图 </a></li>  
+    	<li><a href="#home5" class="contentLink">交易量环比趋势图 </a></li>  
+    </ul>  
+</div>  
+
+<div data-role="page" class="pages" id="home1">  
+    <div data-role="header">  
+    <a href="#" class="showMenu">菜单</a>  
+        <h1 id="dateTime">截止至完成比</h1>  
+    </div><!-- /header -->  
+    <div data-role="content">  
+        <div class="panel"  style="width:40%;height:250px;">
+		<div class="panel-body" style="height:255px;width:500px">
+				<div id="xinpianka" style="height:220px; width: 500px;"></div>
+				<div >
+					<div  style="width: 45%;padding:8px;float:right;">
+						<table class="table table-hover" style="margin: 0 auto;">
+							<tbody>
+							  <tr>
+								<td>累计完成：</td>
+								<td id="yufukalj"></td>
+							  </tr>
+							  <tr>
+								<td>年度计划：</td>
+								<td id="yufukajh"></td>
+							  </tr>
+							</tbody>
+						</table>
+					</div>
+					<div style="width: 45%; padding:8px;">
+					<table class="table table-hover" style="margin: 0 auto;">
+					<tbody>
+					  <tr>
+						<td>累计完成：</td>
+						<td id="xinpiankalj"></td>
+					  </tr>
+					  <tr>
+						<td>年度计划：</td>
+						<td id="xinpiankajh"></td>
+					  </tr>
+					</tbody>
+				</table>
+			</div>
+				</div>
+		</div>
+	</div>
+	<script>
+		var xpkChart = echarts.init(document.getElementById('xinpianka','macarons'));
+		if(re.clearingdate){
+			var clearingdate = re.clearingdate.substr(0,4)+"年"+re.clearingdate.substr(4,2)+"月"+re.clearingdate.substr(6,2)+"日";
+			
+			document.getElementById('dateTime').innerText = "截止至"+clearingdate+"完成比";
+			
+		}
+		if(re.yfkoption){ // 预付卡
+			$("#yufukalj").html(re.yfkoption.yufukalj?re.yfkoption.yufukalj+ "万元":0 + "万元");
+			$("#yufukajh").html(re.yfkoption.yufukajh?re.yfkoption.yufukajh+ "万元":0 + "万元");
+		}
+		if(re.xpkoption){ // 芯片卡
+			xpkoption.series[0].data[0].value = re.xpkoption.value?re.xpkoption.value:0;
+			xpkoption.series[1].data[0].value = re.yfkoption.value?re.yfkoption.value:0; // 预付卡
+			$("#xinpiankalj").html(re.xpkoption.xinpiankalj?re.xpkoption.xinpiankalj+ "万元":0 + "万元");
+			$("#xinpiankajh").html(re.xpkoption.xinpiankajh?re.xpkoption.xinpiankajh+ "万元":0 + "万元");
+			xpkChart.setOption(xpkoption);
+			xpkChart.resize();
+		}
+	
+	</script>
+    </div><!-- /content -->  
+</div>
+<div data-role="page" class="pages" id="home2">  
+    <div data-role="header">  
+    <a href="#" class="showMenu">菜单</a>  
+        <h1>分布图</h1>  
+    </div><!-- /header -->  
+    <div data-role="content">  
+    	<div class="panel-body"  style="height:255px;">
+		 <div id="chartdiv" align="left" style="width: 500px;height:255px;"></div>
+		</div>
+    </div><!-- /content -->  
+    <script>
+	initTus(3);
+    </script>
+</div>
+<div data-role="page" class="pages" id="home3">  
+    <div data-role="header">  
+    <a href="#" class="showMenu">菜单</a>  
+        <h1>交易量</h1>  
+    </div><!-- /header -->  
+    <div data-role="content">  
+        <div class="panel-body"  style="height:250px;">
+			<div id="jiaoyiliang" style="height: 255px;width: 500px;"></div>
+		</div> 
+    </div><!-- /content --> 
+    <Script>
+		var jylChart = echarts.init(document.getElementById('jiaoyiliang'),'macarons');
+		if(re.jyloption){ // 交易量-柱形图 当日
+			jyloption.series[0].data = re.jyloption.value1;
+			jyloption.series[1].data = re.jyloption.value2;
+			jyloption.series[2].data = re.jyloption.value3;
+			jylChart.setOption(jyloption);
+			jylChart.resize();
+		}
+    </script> 
+</div>
+<div data-role="page" class="pages" id="home4">  
+    <div data-role="header">  
+    <a href="#" class="showMenu">菜单</a>  
+        <h1>交易卡量趋势分析图</h1>  
+    </div><!-- /header -->  
+    <div data-role="content">  
+        <div class="panel-body"  style="height:285px;">
+			<div id="zhexiantuJykl" style="height:285px; width: 500px;"></div>
+	    </div>  
+    </div><!-- /content -->  
+    <script>
+		var zxtJyklChart = echarts.init(document.getElementById('zhexiantuJykl'),'macarons');
+		if(re.zxtJykloption){//卡量交易趋势
+			zxtJykloption.xAxis[0].data = re.zxtJykloption.xAxis;
+			zxtJykloption.series[0].data = re.zxtJykloption.ydataCz;
+			zxtJykloption.series[1].data = re.zxtJykloption.ydateXf;
+			zxtJykloption.series[2].data = re.zxtJykloption.ydateHk;
+			zxtJykloption.series[3].data = re.zxtJykloption.ydateTk;
+			zxtJyklChart.setOption(zxtJykloption,true);
+			zxtJyklChart.resize();
+		}
+    </script>
+</div>
+<div data-role="page" class="pages" id="home5">  
+    <div data-role="header">  
+    <a href="#" class="showMenu">菜单</a>  
+        <h1>交易量环比趋势图 </h1>  
+    </div><!-- /header -->  
+    <div data-role="content">  
+   
+        <div class="panel-body"  style="height:285px;">
+			<div id="zhexiantuXf" style="height:285px; width: 500px;"></div>
+	    </div>
+	    <script>
+			var zxtXfChart = echarts.init(document.getElementById('zhexiantuXf'),'macarons'); 
+	    	if(re.zxtXfoption){ //折线图  芯片卡发卡量趋势图 
+				zxtXfoption.xAxis[0].data = re.zxtXfoption.xAxis;
+				zxtXfoption.series[0].data = re.zxtXfoption.ydateXpjt;
+				zxtXfoption.series[1].data = re.zxtXfoption.ydateXpqt;
+				zxtXfoption.series[2].data = re.zxtXfoption.dataYfk;
+				zxtXfoption.series[3].data = re.zxtXfoption.ydateHj;
+				zxtXfChart.setOption(zxtXfoption);
+				zxtXfChart.resize();
+			}
+	    </script>
+    </div><!-- /content -->  
+</div>
+
+<script>
+
+$(document).bind("mobileinit", function () {
+    $.mobile.pushStateEnabled = true;
+});
+function onDeviceReady() {       
+    document.addEventListener("backbutton", onBackKeyDown, false);    }      
+  
+function onBackKeyDown() {      
+  	if(confirm("确定退出程序？")){
+  		navigator.app.exitApp();
+  	}else{
+  		return false;
+  	}
+} 
+$(function () {
+	document.addEventListener("deviceready", onDeviceReady, false); 
+    var menuStatus;
+    var show = function() {
+        if(menuStatus) {
+            return;
+        }
+        $('#menu').show();
+        $.mobile.activePage.animate({
+            marginLeft: "165px",
+        }, 300, function () {
+            menuStatus = true
+        });
+    };
+    var hide = function() {
+        if(!menuStatus) {
+            return;
+        }
+        $.mobile.activePage.animate({
+            marginLeft: "0px",
+        }, 300, function () {
+            menuStatus = false
+            $('#menu').hide();
+        });
+    };
+    var toggle = function() {
+        if (!menuStatus) {
+            show();
+        } else {
+            hide();
+        }
+        return false;
+    };
+    
+    // Show/hide the menu
+    $("a.showMenu").click(toggle);
+    $('#menu, .pages').live("swipeleft", hide);
+    $('.pages').live("swiperight", show);
+    $('div[data-role="page"]').live('pagebeforeshow', function (event, ui) {
+        menuStatus = false;
+        $(".pages").css("margin-left", "0");
+    });
+    // Menu behaviour
+    $("#menu li a").click(function () {
+        var p = $(this).parent();
+        p.siblings().removeClass('active');
+        p.addClass('active');
+    });
+    
+    
+    var nowpage = 1;
+    //给最大的盒子增加事件监听
+    $(".pages").swipe(
+        {
+            swipe:function(event, direction, distance, duration, fingerCount) {
+                 if(direction == "up"){
+                 	nowpage = parseInt($(this).attr("id").split("home")[1]);//获取当前id
+                    nowpage = nowpage + 1;
+                    if(nowpage > 5){
+                    	nowpage = 5;
+                 	}
+                 	$.mobile.changePage("#home"+nowpage,{ transition: "slideup" });
+                 	$("#menu li").eq(nowpage-1).addClass("active").siblings().removeClass("active");
+                 }else if(direction == "down"){
+                 	nowpage = parseInt($(this).attr("id").split("home")[1]);//获取当前id   
+                    nowpage = nowpage - 1;
+                    if(nowpage < 1){
+                    	nowpage = 1;
+                 	}
+                 	$.mobile.changePage("#home"+nowpage,{ transition: "slidedown" });
+                 	$("#menu li").eq(nowpage-1).addClass("active").siblings().removeClass("active");
+                 }else if(direction == "left"){
+                 	hide();
+                 }else if(direction == "right"){
+                 	show();
+                 }
+                	
+            }
+        }
+    );
+    
+});
+
+</script>
+
+</body>

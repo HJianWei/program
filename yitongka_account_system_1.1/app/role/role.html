@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <meta charset="utf-8">
+        <title>角色管理</title>  
+    </head>
+    <body>
+    <div ng-controller="roleController">
+        <div  ui-grid="gridOptions" style="width: 100%; height: 500px; text-align: center;" ui-grid-edit ui-grid-pagination 
+        ui-grid-selection ui-grid-exporter ui-grid-resize-columns ui-grid-auto-resize>
+        </div>
+        
+        <div style="width:100%; height: 100px">
+             <ol>
+                <li>名称：{{testRow.username}}</li>
+                <li>账号：{{testRow.userno}}</li>
+                <li>电话：{{testRow.telephone}}</li>
+             </ol>   
+        </div>
+    </div>
+    </body>
+</html>

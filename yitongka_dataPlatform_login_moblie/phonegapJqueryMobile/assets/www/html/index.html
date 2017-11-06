@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../themes/default/css/jquery.mobile-1.4.5.min.css"></link>
+<script src="../js/jquery-1.8.3.min.js"></script>
+<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+<script src="../js/Chart-1.0.1-beta.4.js"></script>
+</head>
+<body>
+<div data-role="page" id="pageone">
+  <div data-role="header">
+    <h1>厦门易通卡数据管理平台</h1>
+  </div>
+  <div data-role="content">
+  	<div data-position="left" >
+  		<div><a href="javascript:window.open('chart/bar-demo1.html')">柱状图</a></div>
+		<div><a href="javascript:window.open('chart/doughnut-demo1.html')">环形图</a></div>
+  	</div>
+  	<div data-position="right" >
+    	<p>点击链接来查看滑动效果（从右向左滑动到下一页）</p>
+    	<a href="#pagetwo" data-transition="slide">滑动到页面二</a>
+    </div>
+  </div>
+
+  <div data-role="footer">
+  <h1>页脚文本</h1>
+  </div>
+</div> 
+
+<div data-role="page" id="pagetwo">
+  <div data-role="header">
+    <h1>欢迎来到我的主页</h1>
+  </div>
+
+  <div data-role="content">
+    <p>点击链接来查看反向的滑动效果（从左向右滑动到前一页）</p>
+    <a href="#pageone" data-transition="slide" data-direction="reverse">滑动到页面一（反向）</a>
+  </div>
+
+  <div data-role="footer">
+  <h1>页脚文本</h1>
+  </div>
+</div> 
+<script>
+$(document).bind("mobileinit", function () {  
+    $.mobile.pushStateEnabled = true;      
+    
+});  
+
+function onDeviceReady() {       
+    document.addEventListener("backbutton", onBackKeyDown, false);    }      
+  
+function onBackKeyDown() {      
+  	if(confirm("确定退出程序？")){
+  		navigator.app.exitApp();
+  	}else{
+  		return false;
+  	}
+} 
+
+$(function () {         
+    document.addEventListener("deviceready", onDeviceReady, false);      
+  
+
+    var menuStatus;  
+    var show = function() {  
+        if(menuStatus) {  
+            return;  
+        }  
+        $('#menu').show();  
+        $.mobile.activePage.animate({  
+            marginLeft: "165px",  
+        }, 300, function () {  
+            menuStatus = true  
+        });  
+    };  
+    var hide = function() {  
+        if(!menuStatus) {  
+            return;  
+        }  
+        $.mobile.activePage.animate({  
+            marginLeft: "0px",  
+        }, 300, function () {  
+            menuStatus = false  
+            $('#menu').hide();  
+        });  
+    };  
+    var toggle = function() {  
+        if (!menuStatus) {  
+            show();  
+        } else {  
+            hide();  
+        }  
+        return false;  
+    };  
+    // Show/hide the menu  
+    $("a.showMenu").click(toggle);  
+    //$('#menu, .pages').live("swipeleft", hide);  
+    //$('.pages').live("swiperight", show);  
+    $('div[data-role="page"]').live('pagebeforeshow', function (event, ui) {  
+    	menuStatus = false; 
+    	$(".pages").css("margin-left", "0px"); 
+        //menuStatus = true;  
+        //$(".pages").css("margin-left", "165px");  
+    });  
+    
+    
+    // Menu behaviour  
+    $("#menu li a").click(function () {  
+        var p = $(this).parent();  
+        p.siblings().removeClass('active'); 
+        p.addClass('active');  
+        $(this).addClass('active'); 
+        
+    });  
+});  
+
+document.ready=function(){$("a.showMenu").click();}
+
+
+
+
+
+</script>
+</body>
+</html>

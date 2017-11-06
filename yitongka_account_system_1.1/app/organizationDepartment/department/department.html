@@ -1,0 +1,152 @@
+<body>
+    <div class="container">
+    <button type="button" ng-click="addItem()" class="btn btn-sm btn-success">
+        <i class="glyphicon glyphicon-plus">
+        </i> 新建部门
+    </button>
+
+    <form>
+        <label for="predicate">选择条件查询范围:</label>
+        <select class="form-control" id="predicate" ng-model="selectedPredicate" ng-options="predicate for predicate in predicates"></select>
+    </form>
+
+    <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+    <thead>
+    <tr>
+        <th></th>
+        <th st-sort="departmentCode">编号</th>
+        <th st-sort="departmentName">部门</th>
+        <th st-sort="departmentParentName">上级部门</th>
+        <th st-sort="departmentOrganizationName">直属机构</th>
+    </tr>
+
+    <th colspan="2">
+        <input st-search="departmentCode" placeholder="search for code" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="departmentName" placeholder="search for name" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="departmentParentName" placeholder="search for parentDpt" class="input-sm form-control" type="search"/>
+    </th>
+    <th>
+        <input st-search="departmentOrganizationName" placeholder="search for org" class="input-sm form-control" type="search"/>
+    </th>
+
+    <th>
+        <input st-search="{{selectedPredicate}}" placeholder="条件查询" class="input-sm form-control" type="search"/>
+    </th>
+
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="row in displayedCollection">
+        <td cs-select="row"></td>
+        <td>{{row.departmentCode}}</td>
+        <td>{{row.departmentName}}</td>
+        <td>{{row.departmentParentName}}</td>
+        <td>{{row.departmentOrganizationName}}</td>
+
+
+        <td>
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-click="update(row)">
+            <i class="glyphicon glyphicon-pencil"></i>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="removeItem(row)">
+            <i class="glyphicon glyphicon-trash"></i>
+            </button>
+        </div>
+        </td>
+
+    </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+            </td>
+        </tr>
+    </tfoot>
+    </table>
+
+       <!-- 添加信息 -->
+      <div class="modal" id="modal-1">
+        <div class="modal-dialog">
+         <div class="modal-content">
+     
+          <div class="modal-header">
+           <button class="close" data-dismiss="modal">
+            <span class="glyphicon glyphicon-remove"></span>
+           </button>
+           <h3 class="modal-title">添加信息</h3>
+          </div>
+     
+          <div class="modal-body">
+           <div>编号：</div>
+           <input ng-model="newCode" type="text">
+           <div>部门：</div>
+           <input ng-model="newName" type="text">
+           <div>直属部门id：</div>
+           <input ng-model="newParentDptId" type="text">
+           <div>直属部门：</div>
+           <input ng-model="newParentDpt" type="text">
+           <div>直属机构id：</div>
+           <input ng-model="newParentOrgId" type="text">
+            <div>直属机构：</div>
+           <input ng-model="newParentOrg" type="text">
+          </div>
+     
+          <div class="modal-footer">
+           <button class="btn btn-default" data-dismiss="modal">
+           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+           <button class="btn btn-primary" ng-click="save()">
+           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+          </div>
+     
+         </div>
+        </div>
+      </div>
+       
+      <!-- 修改信息 -->
+      <div class="modal" id="modal-2">
+        <div class="modal-dialog">
+         <div class="modal-content">
+     
+          <div class="modal-header">
+           <button class="close" data-dismiss="modal">
+            <span class="glyphicon glyphicon-remove"></span>
+           </button>
+           <h3 class="modal-title">修改信息</h3>
+          </div>
+    
+          <div class="modal-body">
+           <div>编号：</div>
+           <input ng-model="prod.code" value="{{prod.code}}" type="text">
+           <div>部门：</div>
+           <input ng-model="prod.name" value="{{prod.name}}" type="text">
+           <div>直属部门id：</div>
+           <input ng-model="prod.parentDptId" value="{{prod.parentDptId}}" type="text">
+           <div>直属部门：</div>
+           <input ng-model="prod.parentDpt" value="{{prod.parentDpt}}" type="text">
+           <div>直属机构id：</div>
+           <input ng-model="prod.parentOrgId" value="{{prod.parentOrgId}}" type="text">
+            <div>直属机构：</div>
+           <input ng-model="prod.parentOrg" value="{{prod.parentOrg}}" type="text">
+          </div>
+     
+          <div class="modal-footer">
+           <button class="btn btn-default" data-dismiss="modal">
+           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+           <button class="btn btn-primary" ng-click="ensure()">
+           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>确定</button>
+          </div>
+         </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+

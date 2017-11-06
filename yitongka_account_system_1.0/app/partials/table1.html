@@ -1,0 +1,111 @@
+<style>
+  .add{
+   position:relative;
+   top:-40px;
+   left:1000px;
+  }
+</style>
+
+<body>
+  <div >
+  <h2>管理信息：</h2><br>
+  <p>搜索：<input type="text" placeholder="请输入关键字" ng-model="test"></p>
+  <button class="btn btn-primary add" ng-click="add()">添加</button>
+  <table class="table table-bordered" style="text-align: center">
+   <thead>
+    <tr>
+     <td>姓名</td>
+     <td>年龄</td>
+     <td>城市</td>
+     <td>操作</td>
+    </tr>
+   </thead>
+   <tbody>
+    <tr ng-repeat="x in texts | filter:test">
+     <td>{{x.name}}</td>
+     <td>{{x.age}}</td>
+     <td>{{x.city}}</td>
+     <td>
+      <button class="btn btn-warning"" ng-click="update($index)">修改</button> 
+      <button class="btn btn-danger" ng-click="del($index)">删除</button>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+   
+  <!-- 添加信息 -->
+  <div class="modal" id="modal-1">
+ 
+    <div class="modal-dialog">
+ 
+     <div class="modal-content">
+ 
+      <div class="modal-header">
+       <button class="close" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove"></span>
+       </button>
+       <h3 class="modal-title">添加信息</h3>
+      </div>
+ 
+      <div class="modal-body">
+       <div>姓名：</div>
+       <input ng-model="newName" type="text">
+       <div>年龄：</div>
+       <input ng-model="newAge" type="text">
+       <div>城市：</div>
+       <input ng-model="newCity" type="text">
+      </div>
+ 
+      <div class="modal-footer">
+       <button class="btn btn-default" data-dismiss="modal">关闭</button>
+       <button class="btn btn-success" ng-click="save()">保存</button>
+      </div>
+ 
+     </div>
+ 
+    </div>
+ 
+  </div>
+   
+  <!-- 修改信息 -->
+  <div class="modal" id="modal-2">
+ 
+    <div class="modal-dialog">
+ 
+     <div class="modal-content">
+ 
+      <div class="modal-header">
+       <button class="close" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove"></span>
+       </button>
+       <h3 class="modal-title">修改信息</h3>
+      </div>
+ 
+      <div class="modal-body">
+       <div>姓名：</div>
+       <input ng-model="prod.name" value="{{prod.name}}" type="text">
+       <div>年龄：</div>
+       <input ng-model="prod.age" value="{{prod.age}}" type="text">
+       <div>城市：</div>
+       <input ng-model="prod.city" value="{{prod.city}}" type="text">
+      </div>
+ 
+      <div class="modal-footer">
+       <button class="btn btn-default" data-dismiss="modal">关闭</button>
+       <button class="btn btn-success" ng-click="ensure()">确定</button>
+      </div>
+ 
+     </div>
+ 
+    </div>
+  </div>
+
+ </div>
+  </body>
+ 
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  -->
+ 
+

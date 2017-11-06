@@ -1,0 +1,1 @@
+phonegap+jquerymobile+html+css3实现的一个数据平台显示效果，自己做了登录界面及view侧滑翻页功能，就是链接的跳转绑定到li的跳转显示效果
