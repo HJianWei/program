@@ -1,0 +1,5 @@
+# program
+一些工作中的项目
+yitongka_account_system_1.0：账户系统我自己做的版本 做到登录、登录验证、用户管理、超时等
+yitongka_account_system_1.1：账户系统整合后的初始版本
+yitongka_dataPlatform_login_moblie：数据平台登录
